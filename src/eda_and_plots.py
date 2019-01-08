@@ -44,17 +44,18 @@ def make_bar_graph(df, col, title, filename):
             ha='center',                # Horizontally center label
             va=va)                      # Vertically align label differently for
                                         # positive and negative values.
-    plt.show()
+    plt.savefig('../images/all_hospitals/' + filename)
 
 
 
 if __name__ == '__main__':
-    df = pd.read_csv('../data/sample_df')
-    # df = pd.read_excel('../data/DemoData.xlsx')
+    # df = pd.read_csv('../../data/sample_df')
+    df = pd.read_excel('../../data/DemoData.xlsx')
     # df1 = df[['Insurance_Code_Description', 'Transaction_Amount', 'NPSR']]
     # df2 = df1.groupby('Insurance_Code_Description').sum()
     # df2['Percentage'] = (df2['Transaction_Amount']/df2['NPSR'])*100
 
+# All hospitals
     # bar plot of grouped-by insurance code description for all locations
     # print(make_bar_graph(df, 'Insurance_Code_Description',
     # 'Grouped By Insurance Code Description', 'all-insurance'))
@@ -68,8 +69,8 @@ if __name__ == '__main__':
     # 'Grouped By Hospital', 'all-loc'))
 
     # bar plot of grouped-by patient class for all locations
-    print(make_bar_graph(df, 'Financial_Class',
-    'Grouped By Patient Class', 'all-fin-class'))
+    # print(make_bar_graph(df, 'Financial_Class',
+    # 'Grouped By Patient Class', 'all-fin-class'))
 
     # bar plot of grouped-by department for all locations
     # print(make_bar_graph(df, 'Discharge_Department_ID',
@@ -78,3 +79,29 @@ if __name__ == '__main__':
     # bar plot of grouped-by service type for all locations
     # print(make_bar_graph(df, 'Service_Code',
     # 'Grouped By Service Type', 'all-serv-type'))
+
+# Hospital 1
+    
+    # bar plot of grouped-by insurance code description for H1
+    print(make_bar_graph(df, 'Insurance_Code_Description',
+    'Grouped By Insurance Code Description', 'all-insurance'))
+
+    # bar plot of grouped-by transaction detail for H1
+    print(make_bar_graph(df, 'NCI_Transaction_Detail',
+    'Grouped By Transaction Detail', 'all-trans-det'))
+
+    # bar plot of grouped-by locationid for H1
+    print(make_bar_graph(df, 'LocationID',
+    'Grouped By Hospital', 'all-loc'))
+
+    # bar plot of grouped-by patient class for H1
+    print(make_bar_graph(df, 'Financial_Class',
+    'Grouped By Patient Class', 'all-fin-class'))
+
+    # bar plot of grouped-by department for H1
+    print(make_bar_graph(df, 'Discharge_Department_ID',
+    'Grouped By Department', 'all-dept'))
+
+    # bar plot of grouped-by service type for H1
+    print(make_bar_graph(df, 'Service_Code',
+    'Grouped By Service Type', 'all-serv-type'))

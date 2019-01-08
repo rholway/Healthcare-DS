@@ -53,7 +53,7 @@ From this information, we looked at avoidable write-off transaction amounts by t
 * Date
 * Service Type
 
-We want to look at avoidable write-off transaction amount as a percentage of NPSR.  We want to compare that percentage to an industry average of:
+We want to look at avoidable write-off (AWO) transaction amount as a percentage of NPSR.  We want to compare that percentage to an industry average of:
 * 0.74% - Top Quartile Performance
 * 1.54% - National Average Performance
 If we see a gap between actual hospital performance and the national average, we see a potential financial opportunity.  We want to decrease the AWO/NPSR percentage.  If we can decrease the AWO transaction amount, we can save money.
@@ -61,3 +61,23 @@ If we see a gap between actual hospital performance and the national average, we
 To get an idea of the data we are dealing with, its easiest to visualize the data.
 
 # Exploratory Data Analysis and Data Visualization
+
+We looked at all six hospitals grouped together, and pivoted the six tables out by the following categories, and from those pivoted categories calculated the AWO as a percentage of NPSR.
+
+### By Insurance (Insurance_Code_Description)
+![All H - by insurance](images/all_hospitals/all-insurance.png)
+
+### By Transaction Detail (NCI_Transaction_Detail)
+![All H - by transaction detail](images/all_hospitals/all-trans-det.png)
+
+### By Hospital (LocationID)
+![All H - by hospital](images/all_hospitals/all-loc.png)
+
+### By Patient Class (Financial_Class)
+![All H - by patient class](images/all_hospitals/all-fin-class.png)
+
+### By Department (Discharge_Department_ID)
+![All H - by dept](images/all_hospitals/all-dept.png)
+
+### By Service Type (Service_Code)
+![All H - by service](images/all_hospitals/all-serv-type.png)
