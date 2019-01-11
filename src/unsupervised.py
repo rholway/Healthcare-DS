@@ -154,131 +154,6 @@ def calculate_vif_(X, thresh=5.0):
     print(X.columns[variables])
     return X.iloc[:, variables]
 
-class MLClassifier():
-    '''
-    Instatiate a sklearn classifier object
-
-    methods:
-
-    '''
-
-    def __init__(self, X_arr=None, y_arr=None, arr_path=None):
-        '''
-        Instantiate object with X and y numpy arrays
-
-        args:
-
-        X_arr (numpy array): full x matrix to use for training and classification
-        y_arr (numpy array): full y array to use for model evaluation and training
-        arr_path (tuple of length == 2): This tuple must only contain two elements which are both strings \
-                                         the first element is the path to the X matrix and the second \
-                                         element is the path to the y matrix
-
-        '''
-        if arr_path:
-            self.X = np.load(arr_path[0])
-            self.y = np.load(arr_path[1])
-        else:
-            self.X = X_arr
-            self.y = y_arr
-
-        self.classifier_model = None
-        self.grid_search = None
-        self.X_train = None
-        self.X_test = None
-        self.y_train = None
-        self.y_test = None
-
-
-    def integrate_pca(self, PCAModel, integration_type=None):
-        if integration_type == 'pca_only':
-            self.X == PCAModel.X_pca
-        else:
-            self.X = np.hstack((self.X, PCAModel.X_pca))
-
-    def split_data(self):
-            self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.X, self.y)
-
-
-    def fit(self, classifier, **kwargs):
-        '''
-        fit data to specified sklearn model
-
-        args:
-        classifier (object): sklearn model object
-        **kwargs (keyword arguments): key word arguments for specific sklearn model
-        '''
-
-        self.classifier_model = classifier(**kwargs)
-        self.classifier_model.fit(self.X_train, self.y_train)
-
-    def pred_score(self):
-        '''
-        Get accuracy of prediction on test data
-        '''
-        accuracy = self.classifier_model.score(self.X_test, self.y_test)
-        print('Accuracy: {}'.format(accuracy))
-        return accuracy
-
-
-    def grid_search(self, classifier, params, set_classifier=False):
-        ''' gets a rough idea where the best parameters lie
-
-        args:
-
-        classifier (sklearn object): selected classifier sklearn object to search over
-        params (dictionary): dictionary of hyperparameters. keys = parameter name, values = paramater values.
-        set_classifier (boolean): if True this method will set the best estimator of the grid search as the classifier that can then be evaluated
-        '''
-
-        self.grid_search = GridSearchCV(classifier, params)
-        print("Starting grid search")
-        self.grid_search.fit(self.X_train, self.y_train)
-        grid_params = self.grid_search.best_params_
-        grid_score = self.grid_search.best_score_
-        print("Coarse search best parameters:")
-        for param, val in grid_params.items():
-            print("{0:<20s} | {1}".format(param, val))
-        print("Coarse search best score: {0:0.3f}".format(grid_score))
-        if set_classifier:
-            self.classifier = self.grid_search.best_estimator_
-
-
-    def plot_roc_curve(self, img_type='original'):
-        '''
-        Plot ROC courve for trained classifier model
-
-        args:
-        img_type (string): specify if the image type is padded or original.
-        '''
-
-        fig = plt.figure(figsize=(12,8))
-        ax = fig.add_subplot(111)
-
-        probs = self.classifier.predict_proba(self.X_test)
-        fpr, tpr, thresholds = roc_curve(self.y_test, probs[:,1])
-        auc_score = round(roc_auc_score(self.y_test, probs[:,1]), 4)
-        ax.plot(fpr, tpr, label= f'{self.classifier.__class__.__name__} = {auc_score} AUC')
-        ax.plot([0, 1], [0, 1], linestyle='--', lw=2, color='k',
-             label='Chance')
-        ax.set_xlabel("False Positive Rate", fontsize=16)
-        ax.set_ylabel("True Positive Rate", fontsize=16)
-        ax.set_title("ROC plot of Mammogram mass classification with {} images".format(img_type), fontsize=18)
-        ax.legend()
-        plt.show()
-        accuracy = self.classifier.score(self.X_test, self.y_test)
-        print('Accuracy: {}'.format(accuracy))
-
-    def save_ml_model(self, path):
-        '''
-        Save trained classifier model
-
-        args:
-        path (string): path including name of model to save
-        '''
-        with open('{}'.format(path), 'wb') as f:
-            Pickle.dump(self.classifier, f)
-
 def count_classes(df, target_col, type='downsample'):
     class_counts = df.groupby(target_col).count().iloc[:, 0].values.tolist()
     classes = df.groupby(target_col).count().iloc[:, 0].index.values
@@ -307,17 +182,17 @@ def count_classes(df, target_col, type='downsample'):
 
 if __name__=="__main__":
 
-    # df_orig = pd.read_csv('../../DemoData.xlsx')
-    df_num = pd.read_csv('../../trial_df_1.csv')
-    df_down = count_classes(df_num, 'AWO_Bucket', type='downsample')
+    df_full = pd.read_csv('../../navigant_data/final_df_cl_edit.csv')
 
-    x_vals = df_down.drop(['Transaction_Amount', 'AWO_Bucket', 'NPSR', 'Unnamed: 0', 'Last_Payment_Amount'], axis=1)
-    y_multi = df_down[['AWO_Bucket', 'Transaction_Amount', 'NPSR']]
-    y_transaction = df_down['Transaction_Amount']
-    y_bucket = df_down['AWO_Bucket']
-    y_npsr = df_down['NPSR']
-    y_new = df_down['Transaction_Amount'].values / df_down['NPSR']
+    # df_down = count_classes(df_num, 'AWO_Bucket', type='downsample')
 
+    # x_vals = df_down.drop(['Transaction_Amount', 'AWO_Bucket', 'NPSR', 'Unnamed: 0', 'Last_Payment_Amount'], axis=1)
+    # y_multi = df_down[['AWO_Bucket', 'Transaction_Amount', 'NPSR']]
+    # y_transaction = df_down['Transaction_Amount']
+    # y_bucket = df_down['AWO_Bucket']
+    # y_npsr = df_down['NPSR']
+    # y_new = df_down['Transaction_Amount'].values / df_down['NPSR']
+    #
 
     # figure, ax = plt.subplots()
     #
@@ -329,10 +204,10 @@ if __name__=="__main__":
     # df_vif = drop_vif_cols(x_vals, 10)
     # df_new = calculate_vif_(x_vals, 10)
 
-    classifier = MLClassifier(X_arr=x_vals, y_arr=y_bucket)
-    classifier.split_data()
-    classifier.fit(RandomForestClassifier, n_estimators=1000)
-    score = classifier.pred_score()
-
-    feature_imp = np.argsort(classifier.classifier_model.feature_importances_)
-    top_five = list(x_vals.columns[feature_imp[-1:-6:-1]])
+    # classifier = MLClassifier(X_arr=x_vals, y_arr=y_bucket)
+    # classifier.split_data()
+    # classifier.fit(RandomForestClassifier, n_estimators=1000)
+    # score = classifier.pred_score()
+    #
+    # feature_imp = np.argsort(classifier.classifier_model.feature_importances_)
+    # top_five = list(x_vals.columns[feature_imp[-1:-6:-1]])
