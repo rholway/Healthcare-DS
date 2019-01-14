@@ -1,9 +1,11 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+from scipy.spatial.distance import pdist, squareform
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn import cluster, decomposition, ensemble, manifold, random_projection, preprocessing
-from sklearn.metrics import confusion_matrix, precision_score, recall_score, accuracy_score, roc_curve, roc_auc_score
+from sklearn.metrics import silhouette_score, confusion_matrix, precision_score, recall_score, accuracy_score, roc_curve, roc_auc_score
 from sklearn.metrics import log_loss
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
@@ -126,6 +128,36 @@ class PCAModel():
         else:
             plt.show()
 
+class KMeansModel():
+
+    def __init__(self, X):
+        self.X = X
+        self.kmeans_model = None
+
+    def fit(self, n_clusters=2):
+        self.kmeans_model = KMeans(n_clusters=n_clusters)
+        self.kmeans_model.fit(self.X)
+        return self.kmeans_model
+
+    def elbow_plot(self, max_clust):
+        scores = [-(self.fit(n_clusters=n).score(self.X)) for n in range(1, max_clust + 1)]
+        plt.plot(range(1, max_clust + 1), scores)
+        plt.xlabel('K')
+        plt.ylabel('RSS')
+        plt.title('RSS given K clusters')
+        plt.show()
+        plt.close()
+
+    def silhouette_plot(self, max_clust):
+        sil_scores = [silhouette_score(self.X, self.fit(n_clusters=n).labels_) for n in range(2, max_clust + 1)]
+        plt.plot(range(2, max_clust + 1), sil_scores)
+        plt.xlabel('K')
+        plt.ylabel('Silhouette Score')
+        plt.title('Silhouetter Score vs K')
+        plt.show()
+        plt.close()
+
+
 def vif(x_mat):
     for idx, col in enumerate(x_mat.columns):
         print(f"{col}: {oi.variance_inflation_factor(x_mat.values,idx)}")
@@ -183,31 +215,22 @@ def count_classes(df, target_col, type='downsample'):
 if __name__=="__main__":
 
     df_full = pd.read_csv('../../navigant_data/final_df_cl_edit.csv')
+    df_full.drop('Unnamed: 0', axis=1, inplace=True)
+    targets = ['locationid', 'awo_bucket', 'region', 'npsr', 'awo_amount']
+    df_X = df_full.drop(targets, axis=1)
+    df_all_y = df_full[targets]
 
-    # df_down = count_classes(df_num, 'AWO_Bucket', type='downsample')
-
-    # x_vals = df_down.drop(['Transaction_Amount', 'AWO_Bucket', 'NPSR', 'Unnamed: 0', 'Last_Payment_Amount'], axis=1)
-    # y_multi = df_down[['AWO_Bucket', 'Transaction_Amount', 'NPSR']]
-    # y_transaction = df_down['Transaction_Amount']
-    # y_bucket = df_down['AWO_Bucket']
-    # y_npsr = df_down['NPSR']
-    # y_new = df_down['Transaction_Amount'].values / df_down['NPSR']
-    #
-
+    df_short = df_full.iloc[:100]
     # figure, ax = plt.subplots()
-    #
-    # pca_mod = PCAModel(x_vals)
+    # pca_mod = PCAModel(df_X.values)
     # pca_mod.make_pca_model(n_components=15)
     # pca_mod.scree_plot(ax, n_components_to_plot=15)
+
+    km = KMeansModel(df_short.values)
+    # km.fit()
+    # km.elbow_plot(max_clust=5)
+    km.silhouette_plot(max_clust=5)
 
     # vif(x_vals)
     # df_vif = drop_vif_cols(x_vals, 10)
     # df_new = calculate_vif_(x_vals, 10)
-
-    # classifier = MLClassifier(X_arr=x_vals, y_arr=y_bucket)
-    # classifier.split_data()
-    # classifier.fit(RandomForestClassifier, n_estimators=1000)
-    # score = classifier.pred_score()
-    #
-    # feature_imp = np.argsort(classifier.classifier_model.feature_importances_)
-    # top_five = list(x_vals.columns[feature_imp[-1:-6:-1]])
