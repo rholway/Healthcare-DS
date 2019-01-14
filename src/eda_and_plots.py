@@ -81,7 +81,7 @@ if __name__ == '__main__':
     # 'Grouped By Service Type', 'all-serv-type'))
 
 # Hospital 1
-    
+
     # bar plot of grouped-by insurance code description for H1
     print(make_bar_graph(df, 'Insurance_Code_Description',
     'Grouped By Insurance Code Description', 'all-insurance'))

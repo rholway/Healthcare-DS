@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
 from scipy.spatial.distance import pdist, squareform
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn import cluster, decomposition, ensemble, manifold, random_projection, preprocessing
@@ -11,6 +12,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.naive_bayes import MultinomialNB
 import statsmodels.stats.outliers_influence as oi
+import pdb
 
 
 class PCAModel():
@@ -132,15 +134,19 @@ class KMeansModel():
 
     def __init__(self, X):
         self.X = X
+        self.scaled_X = None
         self.kmeans_model = None
 
     def fit(self, n_clusters=2):
+        pdb.set_trace()
+        scaler = StandardScaler()
+        self.scaled_x = scaler.fit_transform(self.X)
         self.kmeans_model = KMeans(n_clusters=n_clusters)
-        self.kmeans_model.fit(self.X)
+        self.kmeans_model.fit(self.scaled_X)
         return self.kmeans_model
 
     def elbow_plot(self, max_clust):
-        scores = [-(self.fit(n_clusters=n).score(self.X)) for n in range(1, max_clust + 1)]
+        scores = [-(self.fit(n_clusters=n).score(self.scaled_X)) for n in range(1, max_clust + 1)]
         plt.plot(range(1, max_clust + 1), scores)
         plt.xlabel('K')
         plt.ylabel('RSS')
@@ -149,7 +155,7 @@ class KMeansModel():
         plt.close()
 
     def silhouette_plot(self, max_clust):
-        sil_scores = [silhouette_score(self.X, self.fit(n_clusters=n).labels_) for n in range(2, max_clust + 1)]
+        sil_scores = [silhouette_score(self.scaled_X, self.fit(n_clusters=n).labels_) for n in range(2, max_clust + 1)]
         plt.plot(range(2, max_clust + 1), sil_scores)
         plt.xlabel('K')
         plt.ylabel('Silhouette Score')
@@ -220,16 +226,16 @@ if __name__=="__main__":
     df_X = df_full.drop(targets, axis=1)
     df_all_y = df_full[targets]
 
-    df_short = df_full.iloc[:100]
+    df_short = df_X.iloc[:100]
     # figure, ax = plt.subplots()
     # pca_mod = PCAModel(df_X.values)
     # pca_mod.make_pca_model(n_components=15)
     # pca_mod.scree_plot(ax, n_components_to_plot=15)
 
-    km = KMeansModel(df_short.values)
+    km = KMeansModel(df_X.values)
     # km.fit()
-    # km.elbow_plot(max_clust=5)
-    km.silhouette_plot(max_clust=5)
+    km.elbow_plot(max_clust=5)
+    # km.silhouette_plot(max_clust=5)
 
     # vif(x_vals)
     # df_vif = drop_vif_cols(x_vals, 10)
