@@ -134,3 +134,20 @@ class MLClassifier():
         '''
         with open('{}'.format(path), 'wb') as f:
             Pickle.dump(self.classifier, f)
+
+if __name__=='__main__':
+    df_full = pd.read_csv('../../navigant_data/final_df_cl_edit.csv')
+    df_full.drop('Unnamed: 0', axis=1, inplace=True)
+    targets = ['locationid', 'awo_bucket', 'region', 'npsr', 'awo_amount']
+
+    # vif(x_vals)
+    # df_vif = drop_vif_cols(x_vals, 10)
+    # df_new = calculate_vif_(x_vals, 10)
+
+    # classifier = MLClassifier(X_arr=x_vals, y_arr=y_bucket)
+    # classifier.split_data()
+    # classifier.fit(RandomForestClassifier, n_estimators=1000)
+    # score = classifier.pred_score()
+    #
+    # feature_imp = np.argsort(classifier.classifier_model.feature_importances_)
+    # top_five = list(x_vals.columns[feature_imp[-1:-6:-1]])
