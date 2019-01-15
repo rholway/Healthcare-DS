@@ -69,10 +69,7 @@ We looked at all six hospitals grouped together, and pivoted the six tables out 
 ### By Insurance (Insurance_Code_Description)
 ![All H - by insurance](images/all_hospitals/all-insurance.png)
 
-<!-- ### By Financial Class (Financial_Class)
-![All H - by patient class](images/all_hospitals/all-fin-class.png) -->
-
-### By Transaction Detail (NCI_Transaction_Detail)
+<!-- ### By Transaction Detail (NCI_Transaction_Detail)
 ![All H - by transaction detail](images/all_hospitals/all-trans-det.png)
 
 ### By Hospital (LocationID)
@@ -82,23 +79,23 @@ We looked at all six hospitals grouped together, and pivoted the six tables out 
 ![All H - by dept](images/all_hospitals/all-dept.png)
 
 ### By Patient Class (Service_Code)
-![All H - by service](images/all_hospitals/all-patient-class.png)
+![All H - by service](images/all_hospitals/all-patient-class.png) -->
 
 ## Hospital 1
 
-### H1 - By Insurance (Insurance_Code_Description)
-![H1 - by insurance](images/hosp_1/h1-insurance.png)
+<!-- ### H1 - By Insurance (Insurance_Code_Description)
+![H1 - by insurance](images/hosp_1/h1-insurance.png) -->
 
 ### H1 - By Transaction Detail (NCI_Transaction_Detail)
 ![H1 - by transaction detail](images/hosp_1/h1-trans-det.png)
-
+<!--
 ### H1 - By Department (Discharge_Department_ID)
 ![H1 - by dept](images/hosp_1/h1-dept.png)
 
 ### H1 - By Patient Class (Service_Code)
-![H1 - by service](images/hosp_1/h1-patient-class.png)
+![H1 - by service](images/hosp_1/h1-patient-class.png) -->
 
-## Hospital 2
+<!-- ## Hospital 2
 
 ### H2 - By Insurance (Insurance_Code_Description)
 ![H2 - by insurance](images/hosp_2/h2-insurance.png)
@@ -110,18 +107,18 @@ We looked at all six hospitals grouped together, and pivoted the six tables out 
 ![H2 - by dept](images/hosp_2/h2-dept.png)
 
 ### H2 - By Patient Class (Service_Code)
-![H2 - by service](images/hosp_2/h2-patient-class.png)
+![H2 - by service](images/hosp_2/h2-patient-class.png) -->
 
 ## Hospital 3
 
-### H3 - By Insurance (Insurance_Code_Description)
+<!-- ### H3 - By Insurance (Insurance_Code_Description)
 ![H3 - by insurance](images/hosp_3/h3-insurance.png)
 
 ### H3 - By Transaction Detail (NCI_Transaction_Detail)
 ![H3 - by transaction detail](images/hosp_3/h3-trans-det.png)
 
 ### H3 - By Department (Discharge_Department_ID)
-![H3 - by dept](images/hosp_3/h3-dept.png)
+![H3 - by dept](images/hosp_3/h3-dept.png) -->
 
 ### H3 - By Patient Class (Service_Code)
 ![H3 - by service](images/hosp_3/h3-patient-class.png)
@@ -131,39 +128,39 @@ We looked at all six hospitals grouped together, and pivoted the six tables out 
 ### H4 - By Insurance (Insurance_Code_Description)
 ![H4 - by insurance](images/hosp_4/h4-insurance.png)
 
-### H4 - By Transaction Detail (NCI_Transaction_Detail)
+<!-- ### H4 - By Transaction Detail (NCI_Transaction_Detail)
 ![H4 - by transaction detail](images/hosp_4/h4-trans-det.png)
 
 ### H4 - By Department (Discharge_Department_ID)
 ![H4 - by dept](images/hosp_4/h4-dept.png)
 
 ### H4 - By Patient Class (Service_Code)
-![H4 - by service](images/hosp_4/h4-patient-class.png)
+![H4 - by service](images/hosp_4/h4-patient-class.png) -->
 
 ## Hospital 5
 
-### H5 - By Insurance (Insurance_Code_Description)
+<!-- ### H5 - By Insurance (Insurance_Code_Description)
 ![H5 - by insurance](images/hosp_5/h5-insurance.png)
 
 ### H5 - By Transaction Detail (NCI_Transaction_Detail)
-![H5 - by transaction detail](images/hosp_5/h5-trans-det.png)
+![H5 - by transaction detail](images/hosp_5/h5-trans-det.png) -->
 
 ### H5 - By Department (Discharge_Department_ID)
 ![H5 - by dept](images/hosp_5/h5-dept.png)
 
-### H5 - By Patient Class (Service_Code)
-![H5 - by service](images/hosp_5/h5-patient-class.png)
+<!-- ### H5 - By Patient Class (Service_Code)
+![H5 - by service](images/hosp_5/h5-patient-class.png) -->
 
 ## Hospital 6
 
 ### H6 - By Insurance (Insurance_Code_Description)
 ![H6 - by insurance](images/hosp_6/h6-insurance.png)
 
-### H6 - By Transaction Detail (NCI_Transaction_Detail)
+<!-- ### H6 - By Transaction Detail (NCI_Transaction_Detail)
 ![H6 - by transaction detail](images/hosp_6/h6-trans-det.png)
 
 ### H6 - By Department (Discharge_Department_ID)
 ![H6 - by dept](images/hosp_6/h6-dept.png)
 
 ### H6 - By Patient Class (Service_Code)
-![H6 - by service](images/hosp_6/h6-patient-class.png)
+![H6 - by service](images/hosp_6/h6-patient-class.png) -->
