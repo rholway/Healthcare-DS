@@ -80,27 +80,41 @@ if __name__=='__main__':
     loc_5 = df[df['LocationID'] == 'Hospital5']
     loc_6 = df[df['LocationID'] == 'Hospital6']
 
+    df_outpatient = df[df['Service_Code'] == 'OUTPATIENT']
+    df_emergency = df[df['Service_Code'] == 'EMERGENCY']
+    df_observation = df[df['Service_Code'] == 'OBSERVATION']
+    df_dialysis = df[df['Service_Code'] == 'DIALYSIS']
+    df_psych = df[df['Service_Code'] == 'PSYCH']
+    df_rehab = df[df['Service_Code'] == 'REHAB']
+
     # next_group = df.groupby(['Service_Code', 'NCI_Transaction_Detail'])['target_percentage'].sum()
 
     # df_full = pd.read_csv('../../navigant_data/final_df_cl_edit.csv')
 
-    plot_agg_pie(df, 'Service_Code', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Total percent AWO of NPSR by Service Code', save_fig=True)
-    plot_agg_pie(df, 'NCI_Transaction_Detail', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Total percent AWO of NPSR by NCI_Transaction_Detail', save_fig=True)
+    # plot_agg_pie(df, 'Service_Code', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Total percent AWO of NPSR by Service Code', save_fig=True)
+    # plot_agg_pie(df, 'NCI_Transaction_Detail', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Total percent AWO of NPSR by NCI_Transaction_Detail', save_fig=True)
+    #
+    # plot_agg_pie(loc_1, 'Service_Code', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 1: Total percent AWO of NPSR by Service Code', save_fig=True)
+    # plot_agg_pie(loc_1, 'NCI_Transaction_Detail', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 1: Total percent AWO of NPSR by NCI_Transaction_Detail', save_fig=True)
+    #
+    # plot_agg_pie(loc_2, 'Service_Code', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 2: Total percent AWO of NPSR by Service Code', save_fig=True)
+    # plot_agg_pie(loc_2, 'NCI_Transaction_Detail', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 2: Total percent AWO of NPSR by NCI_Transaction_Detail', save_fig=True)
+    #
+    # plot_agg_pie(loc_3, 'Service_Code', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 3: Total percent AWO of NPSR by Service Code', save_fig=True)
+    # plot_agg_pie(loc_3, 'NCI_Transaction_Detail', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 3: Total percent AWO of NPSR by NCI_Transaction_Detail', save_fig=True)
+    #
+    # plot_agg_pie(loc_4, 'Service_Code', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 4: Total percent AWO of NPSR by Service Code', save_fig=True)
+    # plot_agg_pie(loc_4, 'NCI_Transaction_Detail', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 4: Total percent AWO of NPSR by NCI_Transaction_Detail', save_fig=True)
+    #
+    # plot_agg_pie(loc_5, 'Service_Code', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 5: Total percent AWO of NPSR by Service Code', save_fig=True)
+    # plot_agg_pie(loc_5, 'NCI_Transaction_Detail', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 5: Total percent AWO of NPSR by NCI_Transaction_Detail', save_fig=True)
+    #
+    # plot_agg_pie(loc_6, 'Service_Code', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 6: Total percent AWO of NPSR by Service Code', save_fig=True)
+    # plot_agg_pie(loc_6, 'NCI_Transaction_Detail', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 6: Total percent AWO of NPSR by NCI_Transaction_Detail', save_fig=True)
 
-    plot_agg_pie(loc_1, 'Service_Code', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 1: Total percent AWO of NPSR by Service Code', save_fig=True)
-    plot_agg_pie(loc_1, 'NCI_Transaction_Detail', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 1: Total percent AWO of NPSR by NCI_Transaction_Detail', save_fig=True)
-
-    plot_agg_pie(loc_2, 'Service_Code', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 2: Total percent AWO of NPSR by Service Code', save_fig=True)
-    plot_agg_pie(loc_2, 'NCI_Transaction_Detail', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 2: Total percent AWO of NPSR by NCI_Transaction_Detail', save_fig=True)
-
-    plot_agg_pie(loc_3, 'Service_Code', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 3: Total percent AWO of NPSR by Service Code', save_fig=True)
-    plot_agg_pie(loc_3, 'NCI_Transaction_Detail', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 3: Total percent AWO of NPSR by NCI_Transaction_Detail', save_fig=True)
-
-    plot_agg_pie(loc_4, 'Service_Code', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 4: Total percent AWO of NPSR by Service Code', save_fig=True)
-    plot_agg_pie(loc_4, 'NCI_Transaction_Detail', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 4: Total percent AWO of NPSR by NCI_Transaction_Detail', save_fig=True)
-
-    plot_agg_pie(loc_5, 'Service_Code', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 5: Total percent AWO of NPSR by Service Code', save_fig=True)
-    plot_agg_pie(loc_5, 'NCI_Transaction_Detail', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 5: Total percent AWO of NPSR by NCI_Transaction_Detail', save_fig=True)
-
-    plot_agg_pie(loc_6, 'Service_Code', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 6: Total percent AWO of NPSR by Service Code', save_fig=True)
-    plot_agg_pie(loc_6, 'NCI_Transaction_Detail', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 6: Total percent AWO of NPSR by NCI_Transaction_Detail', save_fig=True)
+    plot_agg_pie(df_outpatient, 'NCI_Transaction_Detail', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Outpatient: Total percent AWO of NPSR by NCI_Transaction_Detail', save_fig=True)
+    plot_agg_pie(df_emergency, 'NCI_Transaction_Detail', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Emergency: Total percent AWO of NPSR by NCI_Transaction_Detail', save_fig=True)
+    plot_agg_pie(df_observation, 'NCI_Transaction_Detail', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Observation: Total percent AWO of NPSR by NCI_Transaction_Detail', save_fig=True)
+    plot_agg_pie(df_dialysis, 'NCI_Transaction_Detail', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Dialysis: Total percent AWO of NPSR by NCI_Transaction_Detail', save_fig=True)
+    plot_agg_pie(df_psych, 'NCI_Transaction_Detail', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Psych: Total percent AWO of NPSR by NCI_Transaction_Detail', save_fig=True)
+    plot_agg_pie(df_rehab, 'NCI_Transaction_Detail', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Rehab: Total percent AWO of NPSR by NCI_Transaction_Detail', save_fig=True)
