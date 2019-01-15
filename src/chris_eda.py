@@ -21,8 +21,49 @@ def plot_agg_grouped(df, group_col, target_col, aggregate_func, y_label, title, 
         plt.show()
         plt.close()
 
-def plot_double_grouped():
-    pass
+def plot_agg_pie(df, group_col, target_col, aggregate_func, y_label, title, save_fig=None):
+    fig, ax = plt.subplots()
+    grouped = df.groupby(group_col).aggregate({target_col : aggregate_func})
+    x_range = list(range(0, grouped.shape[0]))
+    x_labels = grouped.index.tolist()
+    y_vals = grouped.values.reshape(1,-1)[0]
+    ax.pie(y_vals, radius=1, labels=x_labels, autopct='%1.1f%%')
+    center_circle = plt.Circle((0,0),0.70,fc='white')
+    fig = plt.gcf()
+    fig.gca().add_artist(center_circle)
+    ax.axis('equal')
+    ax.set_title(title)
+    plt.tight_layout()
+    if save_fig:
+        file_name = title.replace(' ', '_') + '.png'
+        plt.savefig(save_fig_path.format(file_name))
+    else:
+        plt.show()
+        plt.close()
+
+def pie_2(df, group_col, target_col, aggregate_func, y_label, title, save_fig=None):
+    grouped = df.groupby(group_col).aggregate({target_col : aggregate_func})
+    x_range = list(range(0, grouped.shape[0]))
+    x_labels = grouped.index.tolist()
+    y_vals = grouped.values.reshape(1,-1)[0]
+    fig, axs = plt.subplots(1,2, figsize=(9,5))
+    axs = axs.ravel()
+    for i in range(2):
+        axs[i].pie(y_vals, radius=1, labels=x_labels, autopct='%1.1f%%')
+        center_circle = plt.Circle((0,0),0.70,fc='white')
+        # fig = plt.gcf()
+        fig.gca().add_artist(center_circle)
+        # axs[i].add_artist(plt.Circle((0,0),0.70,fc='white'))
+        axs[i].axis('equal')
+        axs[i].set_title(title)
+        plt.tight_layout()
+    if save_fig:
+        file_name = title.replace(' ', '_') + '.png'
+        plt.savefig(save_fig_path.format(file_name))
+    else:
+        plt.show()
+        plt.close()
+
 
 if __name__=='__main__':
 
@@ -43,7 +84,23 @@ if __name__=='__main__':
 
     # df_full = pd.read_csv('../../navigant_data/final_df_cl_edit.csv')
 
-    # plot_agg_grouped(df, 'Service_Code', 'account_id.1', 'sum')
-    # plot_agg_grouped(df, 'NCI_Transaction_Detail', 'account_id.1', 'sum')
-    # plot_agg_grouped(df, 'Service_Code', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Total AWO/NPSR percent by Service Code')
-    plot_agg_grouped(df, 'NCI_Transaction_Detail', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Total percent AWO of NPSR by NCI_Transaction_Detail', save_fig=True)
+    plot_agg_pie(df, 'Service_Code', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Total percent AWO of NPSR by Service Code', save_fig=True)
+    plot_agg_pie(df, 'NCI_Transaction_Detail', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Total percent AWO of NPSR by NCI_Transaction_Detail', save_fig=True)
+
+    plot_agg_pie(loc_1, 'Service_Code', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 1: Total percent AWO of NPSR by Service Code', save_fig=True)
+    plot_agg_pie(loc_1, 'NCI_Transaction_Detail', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 1: Total percent AWO of NPSR by NCI_Transaction_Detail', save_fig=True)
+
+    plot_agg_pie(loc_2, 'Service_Code', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 2: Total percent AWO of NPSR by Service Code', save_fig=True)
+    plot_agg_pie(loc_2, 'NCI_Transaction_Detail', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 2: Total percent AWO of NPSR by NCI_Transaction_Detail', save_fig=True)
+
+    plot_agg_pie(loc_3, 'Service_Code', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 3: Total percent AWO of NPSR by Service Code', save_fig=True)
+    plot_agg_pie(loc_3, 'NCI_Transaction_Detail', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 3: Total percent AWO of NPSR by NCI_Transaction_Detail', save_fig=True)
+
+    plot_agg_pie(loc_4, 'Service_Code', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 4: Total percent AWO of NPSR by Service Code', save_fig=True)
+    plot_agg_pie(loc_4, 'NCI_Transaction_Detail', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 4: Total percent AWO of NPSR by NCI_Transaction_Detail', save_fig=True)
+
+    plot_agg_pie(loc_5, 'Service_Code', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 5: Total percent AWO of NPSR by Service Code', save_fig=True)
+    plot_agg_pie(loc_5, 'NCI_Transaction_Detail', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 5: Total percent AWO of NPSR by NCI_Transaction_Detail', save_fig=True)
+
+    plot_agg_pie(loc_6, 'Service_Code', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 6: Total percent AWO of NPSR by Service Code', save_fig=True)
+    plot_agg_pie(loc_6, 'NCI_Transaction_Detail', 'target_percentage', 'sum', 'Percent AWO of NPSR', 'Hospital 6: Total percent AWO of NPSR by NCI_Transaction_Detail', save_fig=True)
