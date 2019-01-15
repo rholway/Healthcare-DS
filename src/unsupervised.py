@@ -227,14 +227,21 @@ if __name__=="__main__":
     df_all_y = df_full[targets]
 
     df_short = df_X.iloc[:100]
+
+    scaler = preprocessing.StandardScaler() #always scale values for PCA
+    X_scaled = scaler.fit_transform(df_short)
+    pca_model = decomposition.PCA()
+    X_pca = pca_model.fit(X_scaled)
+
+
     # figure, ax = plt.subplots()
     # pca_mod = PCAModel(df_X.values)
     # pca_mod.make_pca_model(n_components=15)
     # pca_mod.scree_plot(ax, n_components_to_plot=15)
 
-    km = KMeansModel(df_X.values)
+    # km = KMeansModel(df_X.values)
     # km.fit()
-    km.elbow_plot(max_clust=5)
+    # km.elbow_plot(max_clust=5)
     # km.silhouette_plot(max_clust=5)
 
     # vif(x_vals)

@@ -71,7 +71,6 @@
   -Last_Payment_Amount
   -Length_of_Stay
   -Primary_Service_Name
-  -Region
   -NPSR
 
   columns to remain not dummied:
