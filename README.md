@@ -1,6 +1,6 @@
 # Analyzing Healthcare Data
 
-We obtained heath care data of patients, whose names and information has been made private.  The information provided in the data includes the following:
+We obtained heath care data of patients, whose names and information has been made private.  The information provided in the data includes the following categories:
 
 * account_id - patients account identifier
 * LocationID - six unique values (Hospital 1, 2, 3, 4, 5, 6)
@@ -62,11 +62,37 @@ To get an idea of the data we are dealing with, its easiest to visualize the dat
 
 # Exploratory Data Analysis and Data Visualization
 
-We looked at all six hospitals grouped together, and pivoted the six tables out by the following categories, and from those pivoted categories calculated the AWO as a percentage of NPSR.
+We looked at all hospitals grouped together, and also looked at all six hospitals individually.  We created algorithms that can quickly group each hospital (or all hospitals grouped together) by specified categories, such as:
+* Insurance_Code_Description
+* NCI_Transaction_Detail
+* Discharge_Department_ID
+* Service_Code
+* or any other column in the data frame
+
+And from that grouped information, we can compare variables within that category.  All of the information is looking at AWOs as a percentage of NPSR.
+
+#### When we group hospitals by specific categories, we can break down the variables within those categories in order to determine what variables result in higher percentages of AWOs as NPSR.  Just some of the breakdowns are presented below.
 
 ## All Hospitals
 
+### By Service Code: Total (Service_Code)
+When grouping all hospitals by Service Code, and looking at all variables, 'Outpatient', 'Emergency', 'Rehab', and 'Observation' account for the majority of AWO percentage.
+![Total Transaction Detail](images/chris_imgs/Total_percent_AWO_of_NPSR_by_Service_Code.png)
+
+### By Transaction Detail: Total (NCI_Transaction_Detail)
+When grouping all hospitals by Transaction Detail, and looking at all variables, 'Non Covered accounts for more than 85% of the AWO percentage'
+![Total Transaction Detail](images/chris_imgs/Total_percent_AWO_of_NPSR_by_NCI_Transaction_Detail.png)
+
+### By Transaction Detail: Emergency
+When grouping all hospitals by Transaction Detail, and just looking at the 'Emergency' variable of Transaction Detail, 'Non Covered' accounts for more than 95% of the AWO percentage.
+![Emergency](images/chris_imgs/Emergency:_Total_percent_AWO_of_NPSR_by_NCI_Transaction_Detail.png)
+
+### By Transaction Detail: Rehab
+When grouping all hospitals by Transaction Detail, and just looking at the 'Rehab' variable of Transaction Detail, 'Non Covered' accounts for only 65% of the AWO percentage.  This is significant in comparison to 95% for 'Emergency'.
+![Rehab](images/chris_imgs/Rehab:_Total_percent_AWO_of_NPSR_by_NCI_Transaction_Detail.png)
+
 ### By Insurance (Insurance_Code_Description)
+When grouping all hospitals by Insurance Code, the 'Commercial 3' Insurance Code is associated with a higher AWO percentage.
 ![All H - by insurance](images/all_hospitals/all-insurance.png)
 
 <!-- ### By Transaction Detail (NCI_Transaction_Detail)
@@ -86,13 +112,14 @@ We looked at all six hospitals grouped together, and pivoted the six tables out 
 <!-- ### H1 - By Insurance (Insurance_Code_Description)
 ![H1 - by insurance](images/hosp_1/h1-insurance.png) -->
 
-### H1 - By Transaction Detail (NCI_Transaction_Detail)
+### H1 - By Transaction Detail
+When grouping hospital 1 by Transaction Detail, the 'Authorized Referral' Transaction Detail is associated with a lower AWO percentage.  
 ![H1 - by transaction detail](images/hosp_1/h1-trans-det.png)
-<!--
-### H1 - By Department (Discharge_Department_ID)
-![H1 - by dept](images/hosp_1/h1-dept.png)
 
-### H1 - By Patient Class (Service_Code)
+<!-- ### H1 - By Department (Discharge_Department_ID)
+![H1 - by dept](images/hosp_1/h1-dept.png) -->
+
+<!-- ### H1 - By Patient Class (Service_Code)
 ![H1 - by service](images/hosp_1/h1-patient-class.png) -->
 
 <!-- ## Hospital 2
@@ -109,7 +136,7 @@ We looked at all six hospitals grouped together, and pivoted the six tables out 
 ### H2 - By Patient Class (Service_Code)
 ![H2 - by service](images/hosp_2/h2-patient-class.png) -->
 
-## Hospital 3
+<!-- ## Hospital 3 -->
 
 <!-- ### H3 - By Insurance (Insurance_Code_Description)
 ![H3 - by insurance](images/hosp_3/h3-insurance.png)
@@ -120,12 +147,13 @@ We looked at all six hospitals grouped together, and pivoted the six tables out 
 ### H3 - By Department (Discharge_Department_ID)
 ![H3 - by dept](images/hosp_3/h3-dept.png) -->
 
-### H3 - By Patient Class (Service_Code)
-![H3 - by service](images/hosp_3/h3-patient-class.png)
+<!-- ### H3 - By Patient Class (Service_Code)
+![H3 - by service](images/hosp_3/h3-patient-class.png) -->
 
 ## Hospital 4
 
-### H4 - By Insurance (Insurance_Code_Description)
+### H4 - By Insurance
+When grouping hospital 4 by Insurance Code, the 'Commercial 3' and 'Commercial 6' Insurance Codes are associated with higher AWO percentages.
 ![H4 - by insurance](images/hosp_4/h4-insurance.png)
 
 <!-- ### H4 - By Transaction Detail (NCI_Transaction_Detail)
@@ -137,7 +165,7 @@ We looked at all six hospitals grouped together, and pivoted the six tables out 
 ### H4 - By Patient Class (Service_Code)
 ![H4 - by service](images/hosp_4/h4-patient-class.png) -->
 
-## Hospital 5
+<!-- ## Hospital 5 -->
 
 <!-- ### H5 - By Insurance (Insurance_Code_Description)
 ![H5 - by insurance](images/hosp_5/h5-insurance.png)
@@ -145,16 +173,16 @@ We looked at all six hospitals grouped together, and pivoted the six tables out 
 ### H5 - By Transaction Detail (NCI_Transaction_Detail)
 ![H5 - by transaction detail](images/hosp_5/h5-trans-det.png) -->
 
-### H5 - By Department (Discharge_Department_ID)
-![H5 - by dept](images/hosp_5/h5-dept.png)
+<!-- ### H5 - By Department (Discharge_Department_ID)
+![H5 - by dept](images/hosp_5/h5-dept.png) -->
 
 <!-- ### H5 - By Patient Class (Service_Code)
 ![H5 - by service](images/hosp_5/h5-patient-class.png) -->
 
-## Hospital 6
+<!-- ## Hospital 6
 
 ### H6 - By Insurance (Insurance_Code_Description)
-![H6 - by insurance](images/hosp_6/h6-insurance.png)
+![H6 - by insurance](images/hosp_6/h6-insurance.png) -->
 
 <!-- ### H6 - By Transaction Detail (NCI_Transaction_Detail)
 ![H6 - by transaction detail](images/hosp_6/h6-trans-det.png)
@@ -164,3 +192,5 @@ We looked at all six hospitals grouped together, and pivoted the six tables out 
 
 ### H6 - By Patient Class (Service_Code)
 ![H6 - by service](images/hosp_6/h6-patient-class.png) -->
+
+#### These are just a handful of the visualizations that can be quickly customized based on the categories and variables we want to look at.  
