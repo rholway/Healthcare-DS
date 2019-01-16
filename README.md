@@ -80,7 +80,7 @@ When grouping all hospitals by Service Code, and looking at all variables, 'Outp
 ![Total Transaction Detail](images/chris_imgs/Total_percent_AWO_of_NPSR_by_Service_Code.png)
 
 ### By Transaction Detail: Total (NCI_Transaction_Detail)
-When grouping all hospitals by Transaction Detail, and looking at all variables, 'Non Covered accounts for more than 85% of the AWO percentage'
+When grouping all hospitals by Transaction Detail, and looking at all variables, 'Non Covered' accounts for more than 85% of the AWO percentage.
 ![Total Transaction Detail](images/chris_imgs/Total_percent_AWO_of_NPSR_by_NCI_Transaction_Detail.png)
 
 ### By Transaction Detail: Emergency
@@ -93,7 +93,8 @@ When grouping all hospitals by Transaction Detail, and just looking at the 'Reha
 
 ### By Insurance (Insurance_Code_Description)
 When grouping all hospitals by Insurance Code, the 'Commercial 3' Insurance Code is associated with a higher AWO percentage.
-![All H - by insurance](images/all_hospitals/all-insurance.png)
+
+![All H - by insurance](images/ryan_imgs/all_hospitals/all-insurance.png)
 
 <!-- ### By Transaction Detail (NCI_Transaction_Detail)
 ![All H - by transaction detail](images/all_hospitals/all-trans-det.png)
@@ -113,8 +114,8 @@ When grouping all hospitals by Insurance Code, the 'Commercial 3' Insurance Code
 ![H1 - by insurance](images/hosp_1/h1-insurance.png) -->
 
 ### H1 - By Transaction Detail
-When grouping hospital 1 by Transaction Detail, the 'Authorized Referral' Transaction Detail is associated with a lower AWO percentage.  
-![H1 - by transaction detail](images/hosp_1/h1-trans-det.png)
+When grouping Hospital 1 by Transaction Detail, the 'Authorized Referral' Transaction Detail is associated with a lower AWO percentage.  
+![H1 - by transaction detail](images/ryan_imgs/hosp_1/h1-trans-det.png)
 
 <!-- ### H1 - By Department (Discharge_Department_ID)
 ![H1 - by dept](images/hosp_1/h1-dept.png) -->
@@ -153,8 +154,8 @@ When grouping hospital 1 by Transaction Detail, the 'Authorized Referral' Transa
 ## Hospital 4
 
 ### H4 - By Insurance
-When grouping hospital 4 by Insurance Code, the 'Commercial 3' and 'Commercial 6' Insurance Codes are associated with higher AWO percentages.
-![H4 - by insurance](images/hosp_4/h4-insurance.png)
+When grouping Hospital 4 by Insurance Code, the 'Commercial 3' and 'Commercial 6' Insurance Codes are associated with higher AWO percentages.
+![H4 - by insurance](images/ryan_imgs/hosp_4/h4-insurance.png)
 
 <!-- ### H4 - By Transaction Detail (NCI_Transaction_Detail)
 ![H4 - by transaction detail](images/hosp_4/h4-trans-det.png)
@@ -194,3 +195,19 @@ When grouping hospital 4 by Insurance Code, the 'Commercial 3' and 'Commercial 6
 ![H6 - by service](images/hosp_6/h6-patient-class.png) -->
 
 #### These are just a handful of the visualizations that can be quickly customized based on the categories and variables we want to look at.  
+
+# Regression Models
+
+Since the independent variables of the data we are looking at are mostly non-numeric (categorical), we were able to create dummy variables of the categorical data.  This way, we can represent the categorical data as numbers. For the regression models, we created a dataframe of all dummied variables, with exception to the target, which was AWO %.
+
+We explored co-linearity by checking the features variance inflation factors (VIFs).  After eliminating features showing co-linearity, we ended up with 39 features.
+
+To ensure a representative linear model, the residuals have to be normally distributed, and display homoscedasticity.
+
+This QQ plot shows the distribution of the residuals is not normally distributed.
+![H4 - by insurance](images/ryan_imgs/QQ-linreg.png)
+
+This scatterplot of the residuals exemplifies heteroscedasticity.
+![H4 - by insurance](images/ryan_imgs/resids-linreg.png)
+
+Based on these characteristics of the residuals, all of the assumptions associated with linear regression are not met.  Because of this, we decided to move onto non-parametric learners.
