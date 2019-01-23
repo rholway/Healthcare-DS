@@ -35,7 +35,7 @@ class PCAModel():
         self.pca_model = None
         self.X_pca = None
 
-    def make_pca_model(self, n_components=2):
+    def make_pca_model(self, kwargs**):
         '''
         Create sklearn pca object
 
@@ -228,16 +228,10 @@ if __name__=="__main__":
 
     df_short = df_X.iloc[:100]
 
-    scaler = preprocessing.StandardScaler() #always scale values for PCA
-    X_scaled = scaler.fit_transform(df_short)
-    pca_model = decomposition.PCA()
-    X_pca = pca_model.fit(X_scaled)
-
-
-    # figure, ax = plt.subplots()
-    # pca_mod = PCAModel(df_X.values)
-    # pca_mod.make_pca_model(n_components=15)
-    # pca_mod.scree_plot(ax, n_components_to_plot=15)
+    figure, ax = plt.subplots()
+    pca_mod = PCAModel(df_X.values)
+    pca_mod.make_pca_model(n_components=15)
+    pca_mod.scree_plot(ax, n_components_to_plot=15)
 
     # km = KMeansModel(df_X.values)
     # km.fit()
