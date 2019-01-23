@@ -3,10 +3,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn import cluster, decomposition, ensemble, manifold, random_projection, preprocessing
-from sklearn.metrics import confusion_matrix, precision_score, recall_score, accuracy_score, roc_curve, roc_auc_score
+from sklearn.metrics import confusion_matrix, precision_score, recall_score, accuracy_score, roc_curve, roc_auc_score, mean_squared_error
 from sklearn.metrics import log_loss
 from sklearn.linear_model import LogisticRegression
-from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier, RandomForestRegressor, GradientBoostingRegressor
 from sklearn.naive_bayes import MultinomialNB
 import statsmodels.stats.outliers_influence as oi
 
@@ -135,14 +135,101 @@ class MLClassifier():
         with open('{}'.format(path), 'wb') as f:
             Pickle.dump(self.classifier, f)
 
+class MLRegressor():
+
+    def __init__(self, X_arr=None, y_arr=None, arr_path=None):
+        '''
+        Instantiate object with X and y numpy arrays
+
+        args:
+
+        X_arr (numpy array): full x matrix to use for training and classification
+        y_arr (numpy array): full y array to use for model evaluation and training
+        arr_path (tuple of length == 2): This tuple must only contain two elements which are both strings \
+                                         the first element is the path to the X matrix and the second \
+                                         element is the path to the y matrix
+
+        '''
+        if arr_path:
+            self.X = np.load(arr_path[0])
+            self.y = np.load(arr_path[1])
+        else:
+            self.X = X_arr
+            self.y = y_arr
+
+        self.regressor_model = None
+        self.X_train = None
+        self.X_test = None
+        self.y_train = None
+        self.y_test = None
+
+    def integrate_pca(self, PCAModel, integration_type=None):
+        if integration_type == 'pca_only':
+            self.X == PCAModel.X_pca
+        else:
+            self.X = np.hstack((self.X, PCAModel.X_pca))
+
+    def split_data(self):
+            self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.X, self.y)
+
+    def fit(self, regressor, **kwargs):
+        '''
+        fit data to specified sklearn model
+
+        args:
+        Regressor (object): sklearn model object
+        **kwargs (keyword arguments): key word arguments for specific sklearn model
+        '''
+
+        self.regressor_model = regressor(**kwargs)
+        self.regressor_model.fit(self.X_train, self.y_train)
+
+    def pred_score(self, other_score=None):
+        '''
+        Get accuracy of prediction on test data
+        '''
+        if other_score:
+            y_pred = self.regressor_model.predict(self.X_test)
+            score = other_score(self.y_test, y_pred)
+            print('Score: {}'.format(score))
+        else:
+            score = self.regressor_model.score(self.X_test, self.y_test)
+            print('r^2: {}'.format(score))
+            return score
+
 if __name__=='__main__':
     df_full = pd.read_csv('../../navigant_data/final_df_cl_edit.csv')
     df_full.drop('Unnamed: 0', axis=1, inplace=True)
-    targets = ['locationid', 'awo_bucket', 'region', 'npsr', 'awo_amount']
+    df_full['target_percentage'] = (df_full['awo_amount'] / df_full['npsr']) *100
+    targets = ['locationid', 'awo_bucket', 'region', 'npsr', 'awo_amount', 'target_percentage']
+    drop_idx = df_full[df_full['npsr'] != 0].index
+    df_full = df_full.iloc[drop_idx]
+
+    df_X = df_full.drop(targets, axis=1)
+    y_vals = df_full['target_percentage']
+
 
     # vif(x_vals)
     # df_vif = drop_vif_cols(x_vals, 10)
     # df_new = calculate_vif_(x_vals, 10)
+
+    # regressor = MLRegressor(X_arr=df_X.values, y_arr=y_vals.values)
+    # regressor.split_data()
+    # regressor.fit(RandomForestRegressor, n_estimators=100)
+    # score1 = regressor.pred_score(other_score=mean_squared_error)
+    # score2 = regressor.pred_score()
+
+    gb_regressor = MLRegressor(X_arr=df_X.values, y_arr=y_vals.values)
+    gb_regressor.split_data()
+    gb_regressor.fit(GradientBoostingRegressor)
+    gb_score1 = gb_regressor.pred_score(other_score=mean_squared_error)
+    gb_score2 = gb_regressor.pred_score()
+
+
+    # fig, ax = plt.subplots(111)
+    # ax.plot(regressor.y_test)
+    # ax.plot(regressor.regressor_model.predict(y_test))
+
 
     # classifier = MLClassifier(X_arr=x_vals, y_arr=y_bucket)
     # classifier.split_data()
