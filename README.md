@@ -211,3 +211,32 @@ This scatterplot of the residuals exemplifies heteroscedasticity.
 ![H4 - by insurance](images/ryan_imgs/resids-linreg.png)
 
 Based on these characteristics of the residuals, all of the assumptions associated with linear regression are not met.  Because of this, we decided to move onto non-parametric learners.
+
+# XGBoost Binary Classification
+One of our goals was to predict if the AWO transaction amount was going to be (A) in the first two buckets (between $0 and $1,000), or (B) in the remaining four buckets (above $1,000).  The features we used to predict this were:
+
+* Service Code
+* Transaction Detail
+* Class Description
+* Discharge Department
+* Service Name
+
+In order for our model to predict correctly, let's check to see the balance of our classes.
+
+![unbalanced classes](images/ryan_imgs/unbalanced_AWO_bargraph.png)
+
+Since there are many more cases of (A) than (B), we used SMOTE to balance our data.
+
+![balanced classes](images/ryan_imgs/balanced_AWO_bargraph.png)
+
+Now, we can model more appropriately.
+
+Below is a confusion matrix of our results:
+
+![confusion matrix](images/ryan_imgs/conf_mat.png)
+
+Interpreting the matrix:
+* **Top left box** - Just using the five features mentioned above to represent a patient, our model will predict correctly 90% if the AWO amount associated with that patient will be under $1,000.
+* **Top right box** - 10% of the time, our model will predict that patients' AWO amount will be over $1,000, when it is actually below $1,000.
+* **Bottom right box** - Just using the five features mentioned above to represent a patient, our model will predict correctly 70% if the AWO amount associated with that patient will be above $1,000.
+* **Bottom left box** - 30% of the time, our model will predict that patients' AWO amount will be under $1,000, when it is actually above $1,000.
