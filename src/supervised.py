@@ -197,6 +197,13 @@ class MLRegressor():
             print('r^2: {}'.format(score))
             return score
 
+def bucket_numeric_vals(df, column, num_partitions):
+    bucketed = pd.qcut(df_full[column], num_partitions)
+    bucket_vals = bucketed.unique().sort_values()
+    bucket_dictionary = dict(zip(bucket_vals, np.arange(num_partitions).tolist()))
+    y_bucket = df_full[column].map(bucket_dictionary)
+    return y_bucket
+
 if __name__=='__main__':
     df_full = pd.read_csv('../../navigant_data/final_df_cl_edit.csv')
     df_full.drop('Unnamed: 0', axis=1, inplace=True)
@@ -206,7 +213,13 @@ if __name__=='__main__':
     df_full = df_full.iloc[drop_idx]
 
     df_X = df_full.drop(targets, axis=1)
-    y_vals = df_full['target_percentage']
+    y_vals_regression = df_full['target_percentage']
+
+
+    binary_bucket_y = bucket_numeric_vals(df_full, 'target_percentage', 2)
+    quartile_bucket_y = bucket_numeric_vals(df_full, 'target_percentage', 4)
+    nci_bucket_y = bucket_numeric_vals(df_full, 'target_percentage', 6)
+
 
 
     # vif(x_vals)
@@ -219,12 +232,11 @@ if __name__=='__main__':
     # score1 = regressor.pred_score(other_score=mean_squared_error)
     # score2 = regressor.pred_score()
 
-    gb_regressor = MLRegressor(X_arr=df_X.values, y_arr=y_vals.values)
-    gb_regressor.split_data()
-    gb_regressor.fit(GradientBoostingRegressor)
-    gb_score1 = gb_regressor.pred_score(other_score=mean_squared_error)
-    gb_score2 = gb_regressor.pred_score()
-
+    # gb_regressor = MLRegressor(X_arr=df_X.values, y_arr=y_vals.values)
+    # gb_regressor.split_data()
+    # gb_regressor.fit(GradientBoostingRegressor)
+    # gb_score1 = gb_regressor.pred_score(other_score=mean_squared_error)
+    # gb_score2 = gb_regressor.pred_score()
 
     # fig, ax = plt.subplots(111)
     # ax.plot(regressor.y_test)
