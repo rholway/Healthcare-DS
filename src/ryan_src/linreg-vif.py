@@ -42,9 +42,9 @@ if __name__ == '__main__':
     # Load the dataset
     # df1 = pd.read_excel('../../../data/DemoData.xlsx')
     # df = pd.read_csv('../../../data/sample_df')
-    df = pd.read_csv('../../../data/trial_df_2.csv')
+    df = pd.read_csv('../../../data/trial_df_1.csv')
 
-
+'''
     df.drop(['Unnamed: 0', 'AWO_Bucket', 'ServiceCode_OUTPATIENT', 'DisDept_OBSERVATION',
     'DisDept_REHABILITATION', 'DisDept_RENAL', 'DisDept_URGENT', 'ServiceName_ OBSERVATION PATIENT',
     'ServiceName_ OBSERVATION REMICAID', 'ServiceName_ URGENT CARE CENTER', 'ServiceName_OBSERVATION PATIENT',
@@ -89,7 +89,7 @@ if __name__ == '__main__':
 
     # Make predictions using the testing set
     y_pred = regr.predict(X_test)
-    '''
+
     # The coefficients
     print('Coefficients: \n', regr.coef_)
     # The mean squared error
@@ -103,7 +103,12 @@ if __name__ == '__main__':
     vif["VIF_Factor"] = [variance_inflation_factor(X, i) for i in range(X.shape[1])]
     vif["features"] = df.columns
     print(vif.round(1))
-    '''
+
     ols_model = sm.OLS(endog=y, exog=X).fit()
     # make_QQ_plot(y_test, y_pred, 'QQ plot')
     plot_residuals(y_test, y_pred, 'Predicted AWO %')
+
+    r_sq = r2_score(y_test, y_pred)
+    mse = mean_squared_error(y_test, y_pred)
+    rmse = np.sqrt(mse)
+'''
